@@ -14,9 +14,11 @@ GPT-3 language model.
    :maxdepth: 2
    :caption: Contents:
 
+   model.rst
+   network.rst
    pretrain.rst
    encoding.rst
-
+   reference.rst
 
 ##################
 Indices and tables
