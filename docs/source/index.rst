@@ -3,17 +3,24 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to GPT3-Study's documentation!
-======================================
+##################
+GPT3-Study's Notes
+##################
+
+This project is an project to store notes and codes during the study of the
+GPT-3 language model.
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
+   pretrain.rst
+   encoding.rst
 
 
+##################
 Indices and tables
-==================
+##################
 
 * :ref:`genindex`
 * :ref:`modindex`
