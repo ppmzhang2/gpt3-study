@@ -16,8 +16,10 @@ GPT-3 language model.
 
    model.rst
    network.rst
+   dataset.rst
    pretrain.rst
    encoding.rst
+   application.rst
    reference.rst
 
 ##################

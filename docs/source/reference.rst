@@ -57,6 +57,14 @@ Other Sources
 - This `article <https://www.fullstackpython.com/gpt-3.html>`_ is an entry
   point of several GPT-3 related resources, including application tutorials.
 
+- Alberto Romero's medium
+
+  - `A Complete Overview of GPT-3
+    <https://towardsdatascience.com/gpt-3-a-complete-overview-190232eb25fd>`_
+
+  - `Understanding GPT-3 In 5 Minutes
+    <https://towardsdatascience.com/understanding-gpt-3-in-5-minutes-7fe35c3a1e52>`_
+
 - Jay Alammar's blog
 
   - `How GPT3 Works
