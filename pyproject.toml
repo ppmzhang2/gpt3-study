@@ -92,6 +92,7 @@ authors = [
 ]
 dependencies = [
     "Sphinx>=4.5.0",
+    "openai>=0.16.0",
 ]
 requires-python = ">=3.9,<3.11"
 license = {text = "MIT"}
