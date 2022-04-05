@@ -38,6 +38,11 @@ process. The **in-context learning** refers to the inner loop of meta-learning.
 
 - The efficiency of meta-learning improves with scale
 
+Questions
+---------
+
+- does in-context learning means few-shots?
+
 Pre-Training
 ============
 
