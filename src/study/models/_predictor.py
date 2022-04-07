@@ -13,8 +13,8 @@ def prompt_predict(
     input_ids = tokenizer(prompt, return_tensors="pt").input_ids
     return model.generate(
         input_ids,
-        bos_token=tokenizer.bos_token,
-        eos_token=tokenizer.eos_token,
-        pad_token=tokenizer.pad_token,
+        bos_token_id=tokenizer.bos_token_id,
+        eos_token_id=tokenizer.eos_token_id,
+        pad_token_id=tokenizer.pad_token_id,
         **kwargs,
     )

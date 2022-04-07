@@ -20,7 +20,9 @@ class SeqTxtDataset(Dataset):
         self.labels = []
         for txt in txt_list:
             encodings_dict = tokenizer(
-                tokenizer.bos_token + txt + tokenizer.eos_token,
+                # add only the EOS token according to generator performance
+                txt + tokenizer.eos_token,
+                # tokenizer.bos_token + txt + tokenizer.eos_token,
                 truncation=True,
                 max_length=max_length,
                 padding="max_length",
