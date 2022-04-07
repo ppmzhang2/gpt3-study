@@ -1,8 +1,6 @@
 """fine-tune training
 https://github.com/dredwardhyde/gpt-neo-fine-tuning-example/blob/main/gpt_neo.py
 """
-import csv
-
 import click
 import joblib
 import torch
@@ -14,10 +12,11 @@ from transformers import TrainingArguments
 
 from ..datasets import SeqTxtDataset
 from ..models import train_seq_model
+from ._utils import get_txt
 
-_BOS_TOKEN = '<|bos|>'
-_EOS_TOKEN = '<|eos|>'
-_PAD_TOKEN = '<|pad|>'
+_BOS_TOKEN = '!!!'
+_EOS_TOKEN = '###'
+_PAD_TOKEN = '???'
 
 _training_args = TrainingArguments(
     output_dir='./results',
@@ -32,12 +31,6 @@ _training_args = TrainingArguments(
 )
 
 torch.manual_seed(42)
-
-
-def _get_data(pth: str) -> list[str]:
-    with open(pth, newline='', encoding='utf-8') as f:
-        csv_reader = csv.reader(f)
-        return [i[0] for i in csv_reader]
 
 
 @click.command()
@@ -59,6 +52,12 @@ def _get_data(pth: str) -> list[str]:
     help="path to save trained model",
 )
 @click.option(
+    "--tokenizer-path",
+    type=click.STRING,
+    required=True,
+    help="path to save tokenizer",
+)
+@click.option(
     "--model-name",
     type=click.STRING,
     required=True,
@@ -68,6 +67,7 @@ def fine_tune_train(
     data_path: str,
     valid_ratio: float,
     model_path: str,
+    tokenizer_path: str,
     model_name: str,
 ):
     """fing-tune training"""
@@ -80,7 +80,7 @@ def fine_tune_train(
     model = AutoModelForCausalLM.from_pretrained(model_name)
     model.resize_token_embeddings(len(tokenizer))
 
-    data = _get_data(data_path)
+    data = get_txt(data_path)
     dataset = SeqTxtDataset(
         data,
         tokenizer,
@@ -91,3 +91,4 @@ def fine_tune_train(
         dataset, [len(dataset) - val_size, val_size])
     model = train_seq_model(model, _training_args, train_dataset, val_dataset)
     joblib.dump(model, model_path)
+    joblib.dump(tokenizer, tokenizer_path)

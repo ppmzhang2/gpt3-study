@@ -1,0 +1,6 @@
+"Me: Le singe est dans l'arbre Her: The monkey is in the tree"
+"Me: la plume de ma tante est sur la table Her: My aunt's pen is on the table"
+"Me: j'aime bien le jambon Her: I like the chair"
+"Me: Qu'est-ce que c'est que ca? Her: What do you mean?"
+"Me: Comment tu t'appeles? Her: I am called Bob"
+"Me: Où est le garçon? Her: Where is the boy?"
