@@ -36,7 +36,7 @@ update-setup:
 .PHONY: deploy-dev
 ## deploy dev environment
 deploy-dev:
-	pdm sync -G dev -G ipy --clean
+	pdm sync -G dev --clean
 
 .PHONY: deploy-ci
 ## deploy CI environment

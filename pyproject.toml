@@ -95,6 +95,9 @@ dependencies = [
     "openai>=0.16.0",
     "transformers>=4.17.0",
     "torch>=1.11.0",
+    "dm-haiku>=0.0.6",
+    "jax>=0.3.5",
+    "jaxlib>=0.3.5",
 ]
 requires-python = ">=3.9,<3.11"
 license = {text = "MIT"}
@@ -110,8 +113,3 @@ classifiers = [
 
 [project.urls]
 homepage = "https://github.com/ppmzhang2/gpt3-study"
-
-[project.optional-dependencies]
-ipy = [
-    "jupyter>=1.0.0",
-]
