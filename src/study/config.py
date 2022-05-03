@@ -17,6 +17,10 @@ class Config:
     LOG_LINE_FORMAT = "%(asctime)s %(levelname)-5s %(threadName)s: %(message)s"
     LOG_DATETIME_FORMAT = "%Y/%m/%d %H:%M:%S"
 
+    TOKEN_BPE = os.path.join(basedir, 'tokenizer/vocab.bpe')
+    TOKEN_ID = os.path.join(basedir, 'tokenizer/encoder.json')
+    TOKEN_ALPHABET = os.path.join(basedir, 'tokenizer/alphabet_utf8.json')
+
     @classmethod
     def configure_logger(cls, root_module_name):
         """configure logging"""
