@@ -36,8 +36,6 @@ class Pair:
     @property
     def mergable(self) -> bool:
         """if this pair can be merged"""
-        if self.rank is None:
-            return False
         return self.rank < _MAX_RANK
 
     @property
@@ -60,8 +58,8 @@ class Pair:
 
 
 @dataclass
-class Token:
-    """token"""
+class Tokens:
+    """a group of pairs from several tokens"""
     pairs: dict[int, Pair]
 
     @property
@@ -90,40 +88,9 @@ class Token:
         """whether or not can be furthur merged"""
         return self.top_ranked_pair.mergable
 
-    def merge(self) -> Token:
-        """merge a pair"""
-        top_pair = self.top_ranked_pair
-        pairs_ = {
-            k: v
-            for k, v in self.pairs.items()
-            if k not in [top_pair.index, top_pair.p_index, top_pair.n_index]
-        }
-        n_index = top_pair.n_index
-        if top_pair.p_index is not None:
-            p = self.pairs.get(top_pair.p_index)
-            p_pair = Pair.build(
-                p.prefix,
-                top_pair.merged,
-                p.index,
-                p.p_index,
-                top_pair.n_index,
-            )
-            pairs_ = {**pairs_, p_pair.index: p_pair}
-        if n_index is not None:
-            n = self.pairs.get(n_index)
-            n_pair = Pair.build(
-                top_pair.merged,
-                n.suffix,
-                n.index,
-                top_pair.p_index,
-                n.n_index,
-            )
-            pairs_ = {**pairs_, n_pair.index: n_pair}
-        return type(self)(pairs_)
-
 
 class Tokenizer:
-    """soltion"""
+    """tokenize and encode strings"""
 
     @staticmethod
     def _utf8_encode(ids: tuple[int, ...]) -> tuple[str, ...]:
@@ -158,19 +125,51 @@ class Tokenizer:
         return {p.index: p for p in seq}
 
     @staticmethod
-    def merge(word: Token):
-        """loop a word"""
+    def _merge_one(pairs: Tokens) -> Tokens:
+        """merge a pair"""
+        top_pair = pairs.top_ranked_pair
+        pairs_ = {
+            k: v
+            for k, v in pairs.pairs.items()
+            if k not in [top_pair.index, top_pair.p_index, top_pair.n_index]
+        }
+        n_index = top_pair.n_index
+        if top_pair.p_index is not None:
+            p = pairs.pairs.get(top_pair.p_index)
+            p_pair = Pair.build(
+                p.prefix,
+                top_pair.merged,
+                p.index,
+                p.p_index,
+                top_pair.n_index,
+            )
+            pairs_ = {**pairs_, p_pair.index: p_pair}
+        if n_index is not None:
+            n = pairs.pairs.get(n_index)
+            n_pair = Pair.build(
+                top_pair.merged,
+                n.suffix,
+                n.index,
+                top_pair.p_index,
+                n.n_index,
+            )
+            pairs_ = {**pairs_, n_pair.index: n_pair}
+        return Tokens(pairs_)
+
+    @staticmethod
+    def _merge_all(pairs: Tokens) -> Tokens:
+        """merge all pairs possible"""
         while True:
-            if not word.mergable:
-                return word
-            word = word.merge()
+            if not pairs.mergable:
+                return pairs
+            pairs = Tokenizer._merge_one(pairs)
 
     @classmethod
     def str_to_tokens(cls, s: str) -> list[str]:
         """string to tokens"""
         dc = cls._str_to_pairs(s)
-        token = Token(dc)
-        return cls.merge(token).outcome
+        token = Tokens(dc)
+        return cls._merge_all(token).outcome
 
     @classmethod
     def encode(cls, s: str) -> list[int]:
