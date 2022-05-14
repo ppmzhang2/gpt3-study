@@ -1,4 +1,6 @@
 """tokenizer commands"""
+import re
+
 import click
 from transformers import AutoTokenizer
 
@@ -36,6 +38,20 @@ def encode(words: str):
     """encode string as IDs with handmade Tokenizer"""
     ids = Tokenizer.encode(words)
     print(ids)
+
+
+@click.command()
+@click.option(
+    "--id-string",
+    type=click.STRING,
+    required=True,
+    help="string of token IDs separated by comma or space",
+)
+def decode(id_string: str):
+    """encode string as IDs with handmade Tokenizer"""
+    ids = list(map(int, re.split(', |,| ', id_string)))
+    s = Tokenizer.decode(ids)
+    print(s)
 
 
 @click.command()

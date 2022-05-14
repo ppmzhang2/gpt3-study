@@ -1,6 +1,7 @@
 """all commands here"""
 import click
 
+from .serv import decode
 from .serv import encode
 from .serv import encode_with_pretrained
 from .serv import fine_tune_train
@@ -13,6 +14,7 @@ def cli():
     """all clicks here"""
 
 
+cli.add_command(decode)
 cli.add_command(encode)
 cli.add_command(encode_with_pretrained)
 cli.add_command(fine_tune_train)

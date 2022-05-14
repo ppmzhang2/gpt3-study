@@ -178,3 +178,13 @@ class Tokenizer:
         with open(cfg.TOKEN_ID, 'r', encoding='utf8') as f:
             m = json.load(f)
         return list(map(lambda t: m.get(t, 50256), tokens))
+
+    @classmethod
+    def decode(cls, ids: list[int]) -> str:
+        """decode"""
+        with open(cfg.TOKEN_ID, 'r', encoding='utf8') as f:
+            m = json.load(f)
+        dc = {v: k for k, v in m.items()}
+        seq = [dc[i] for i in ids]
+        # put back whitespace
+        return ''.join(seq).replace('Ġ', ' ')
